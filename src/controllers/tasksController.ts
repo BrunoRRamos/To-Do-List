@@ -30,7 +30,7 @@ class TaskController {
         let task = new tasks(req.body);
 
         try {
-            await task.save().exec();
+            await task.save();
             res.status(201).json(task);
 
         } catch (err) {
