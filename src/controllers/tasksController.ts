@@ -4,32 +4,35 @@ import { Request, Response } from "express"
 class TaskController {
 
     //Get all tasks
-    static getAllTasks = (req: Request, res: Response) => {
-        tasks.find((err: any, tasks: JSON) => {
-            res.status(200).json(tasks);
-        });
+    static getAllTasks = async (req: Request, res: Response) => {
+        try {
+            const allTasks = await tasks.find().exec();
+            res.status(200).json(allTasks);
+        } catch (err) {
+            res.status(500).json({ Message: `${err}`})
+        }
     }
 
     //get by id
-    static getTaskById = (req: Request, res: Response) => {
+    static getTaskById = async (req: Request, res: Response) => {
         const id = req.params.id;
 
         try {
-            tasks.findById(id, (tasks: JSON) => {
-                res.status(200).json(tasks);
-            });
+            const task = await tasks.findById(id);
+            res.status(200).json(task);
 
         } catch (err) {
             res.status(400).json({ Message: `${err}` });
         }
     }
 
-    static createTask = (req: Request, res: Response) => {
+    static createTask = async (req: Request, res: Response) => {
         let task = new tasks(req.body);
 
         try {
-            task.save();
+            await task.save();
             res.status(201).json(task);
+
         } catch (err) {
             res.status(500).json({ Message: `${err}` });
         }
