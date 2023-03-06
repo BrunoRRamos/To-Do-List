@@ -18,7 +18,7 @@ class TaskController {
         const id = req.params.id;
 
         try {
-            const task = await tasks.findById(id);
+            const task = await tasks.findById(id).exec();
             res.status(200).json(task);
 
         } catch (err) {
@@ -30,7 +30,7 @@ class TaskController {
         let task = new tasks(req.body);
 
         try {
-            await task.save();
+            await task.save().exec();
             res.status(201).json(task);
 
         } catch (err) {
