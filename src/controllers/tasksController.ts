@@ -62,11 +62,15 @@ class TaskController {
         }
     }
 
-    static compleatTask = async (req: Request, res: Response) => {
+    static completeTask = async (req: Request, res: Response) => {
         const id = req.params.id;
 
         try {
-            
+            const finishedTask = await tasks.findByIdAndUpdate(id, { $set: { completed: true, end_date: new Date() } });
+            res.status(200).json(finishedTask);
+
+        } catch (err) {
+            res.status(500).json({ Message: `${err}`});
         }
     }
  
