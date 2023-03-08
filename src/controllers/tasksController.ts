@@ -9,7 +9,7 @@ class TaskController {
             const allTasks = await tasks.find().exec();
             res.status(200).json(allTasks);
         } catch (err) {
-            res.status(500).json({ Message: `${err}`})
+            res.status(500).json({ Message: `${err}` })
         }
     }
 
@@ -38,6 +38,38 @@ class TaskController {
         }
     }
 
+    static updateTask = async (req: Request, res: Response) => {
+        const id = req.params.id;
+        
+        try {
+            const updatedTask = await tasks.findByIdAndUpdate(id, { $set:req.body });
+            res.status(200).json(updatedTask);
+
+        } catch (err) {
+            res.status(500).json( { Message: `${err}` });
+        }
+    }
+
+    static deleteTask = async (req: Request, res: Response) => {
+        const id = req.params.id;
+        
+        try {
+            await tasks.findByIdAndDelete(id);
+            res.status(200).json({ Message: `Task id: ${id};  Deleted Successfully` });
+
+        } catch (err) {
+            res.status(500).json({ Message: `${err}` })
+        }
+    }
+
+    static compleatTask = async (req: Request, res: Response) => {
+        const id = req.params.id;
+
+        try {
+            
+        }
+    }
+ 
 }
 
 export default TaskController;
