@@ -11,9 +11,9 @@ interface UItask {
 const taskSchema = new Schema<UItask>({
     title: { type: "string", required: true },
     content: { type: "string", required: true },
-    completed: { type: "boolean", required: true, default: false},
+    completed: { type: "boolean", required: true, default: false },
     start_date: { type: "date", required: true, default: new Date() },
-    end_date: { type: "date", required: false, default: undefined},
+    end_date: { type: "date", required: false, default: undefined },
 });
 
 const tasks = model("task", taskSchema);
